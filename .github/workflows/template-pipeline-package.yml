@@ -97,7 +97,7 @@ jobs:
         if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (inputs.deploy-nuget == true && github.repository_owner == 'PyrotechSoftware' && github.ref == inputs.deploy-condition) }}
         with:
           name: 'Packages'
-          path: ${{env.DOTNET_ROOT}}/ + '*.nupkg'
+          path: '**/*.nupkg'
 
   cd:
     name: Deploy
@@ -105,6 +105,12 @@ jobs:
     if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (inputs.deploy-nuget == true && github.repository_owner == 'PyrotechSoftware' && github.ref == inputs.deploy-condition) }}
     runs-on: ubuntu-latest
     steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: 'Pacakges'
+          path: './artifacts/'
+      
       - name: Deploy to GitHub Packages
         uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
         with: 
