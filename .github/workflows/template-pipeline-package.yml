@@ -108,7 +108,7 @@ jobs:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.0
         with:
-          name: 'Pacakges'
+          name: 'Packages'
           path: './artifacts/'
       
       - name: Deploy to GitHub Packages
