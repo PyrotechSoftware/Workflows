@@ -47,6 +47,8 @@ on:
     secrets:
       publish-profile:
         required: false
+      code-cov-token:
+        required: false
 
 jobs:
   ci:
@@ -87,7 +89,7 @@ jobs:
         if: ${{ inputs.publish-coverage == true }}
         uses: codecov/codecov-action@v2
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.code-cov-token }}
           file: coverage.cobertura.xml
 
       - name: Publish
