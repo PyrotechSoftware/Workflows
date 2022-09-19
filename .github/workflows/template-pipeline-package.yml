@@ -110,8 +110,11 @@ jobs:
         with:
           name: 'Packages'
           path: './artifacts/'
+          
+      - name: Setup Nuget Source
+        run: dotnet nuget add source --username PyrotechSoftware --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/PyrotechSoftware/index.json"
       
       - name: Deploy to GitHub Packages
-        run: dotnet nuget push **/*.nupkg --source 'https://nuget.pkg.github.com/PyrotechSoftware/' --skip-duplicate --api-key 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
+        run: dotnet nuget push **/*.nupkg --source github --skip-duplicate
 
 
