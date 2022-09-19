@@ -92,5 +92,5 @@ jobs:
       
       - name: Deploy to GitHub Packages
         if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (inputs.deploy-nuget == true && github.repository_owner == 'PyrotechSoftware' && github.ref == inputs.deploy-condition) }}
-        run: dotnet nuget push ./**/*.nupkg -s https://nuget.pkg.github.com/PyrotechSoftware/index.json -k ${{ secrets.package-token }} --skip-duplicate --no-symbols true
-        #run: curl -vX PUT -u "PyrotechSoftware:${{ secrets.package-token }}" -F package=./**/${{ inputs.deploy-package-name }}*.nupkg https://nuget.pkg.github.com/PyrotechSoftware/
+        #run: dotnet nuget push ./**/*.nupkg -s https://nuget.pkg.github.com/PyrotechSoftware/index.json -k ${{ secrets.package-token }} --skip-duplicate --no-symbols true
+        run: curl -vX PUT -u "PyrotechSoftware:${{ secrets.package-token }}" -F package=./**/*.nupkg https://nuget.pkg.github.com/PyrotechSoftware/
