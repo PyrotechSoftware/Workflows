@@ -87,7 +87,7 @@ jobs:
         if: ${{ inputs.publish-coverage == true }}
         uses: codecov/codecov-action@v2
         with:
-          token: CODECOV_TOKEN=03873179-613b-4b09-81e6-05bcc1dd80a3
+          token: 03873179-613b-4b09-81e6-05bcc1dd80a3
           file: coverage.cobertura.xml
 
       - name: Publish
