@@ -112,6 +112,6 @@ jobs:
           path: './artifacts/'
       
       - name: Deploy to GitHub Packages
-        run: dotnet nuget push **/*.nupkg --source github --skip-duplicate --api-key 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
+        run: dotnet nuget push **/*.nupkg --source 'https://nuget.pkg.github.com/PyrotechSoftware/' --skip-duplicate --api-key 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
 
 
