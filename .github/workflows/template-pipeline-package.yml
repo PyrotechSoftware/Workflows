@@ -106,7 +106,8 @@ jobs:
         run: dotnet nuget add source --username PyrotechSoftware --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/PyrotechSoftware/index.json"
       
       - name: Deploy to GitHub Packages
-        run: curl -vX PUT -u "PyrotechSoftware:${{ secrets.package-token }}" -F package=./**/${{ inputs.deploy-package-name }}*.nupkg https://nuget.pkg.github.com/PyrotechSoftware/
+        run: dotnet nuget push **/*.nupkg -s https://nuget.pkg.github.com/PyrotechSoftware/index.json -k ${{ secrets.package-token }} --skip-duplicate --no-symbols true
+        #run: curl -vX PUT -u "PyrotechSoftware:${{ secrets.package-token }}" -F package=./**/${{ inputs.deploy-package-name }}*.nupkg https://nuget.pkg.github.com/PyrotechSoftware/
         shell: bash
 
 
