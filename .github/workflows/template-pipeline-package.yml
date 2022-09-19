@@ -31,14 +31,6 @@ on:
         required: false
         type: string
         default: './src'
-      deploy-repo-owner:
-        required: false
-        type: string
-        default: 'PyrotechSoftware'
-      deploy-gh-username:
-        required: false
-        type: string
-        default: 'justin@flipwire.co.za'
       deploy-package-name:
         required: false
         type: string
