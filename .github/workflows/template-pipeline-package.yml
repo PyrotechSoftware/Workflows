@@ -116,9 +116,9 @@ jobs:
       
       - name: Deploy to GitHub Packages
         run: |
-          for f in **/*.nupkg
+          for f in ./src/PyrotechBlazor/bin/release/*.nupkg
           do
-            curl -vX PUT -u "PyrotechSoftware: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" -F package=@$f https://nuget.pkg.github.com/PyrotechSoftware/
+            curl -vX PUT -u "PyrotechSoftware:${{ secrets.package-token }}" -F package=@$f https://nuget.pkg.github.com/PyrotechSoftware/
           done
         shell: bash
 
