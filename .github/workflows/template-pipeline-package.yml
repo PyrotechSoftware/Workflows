@@ -112,17 +112,6 @@ jobs:
           path: './artifacts/'
       
       - name: Deploy to GitHub Packages
-        uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
-        with: 
-            # Path of NuPkg
-            nupkg-path: '**/*.nupkg'
-            # package repository owner
-            repo-owner: ${{ inputs.deploy-repo-owner }}
-            # user account
-            gh-user: ${{ inputs.deploy-gh-username }}
-            # access token
-            token: ${{ secrets.package-token }}
-            # skip publishing duplicated package(s)
-            skip-duplicate: true
+        run: dotnet nuget push **/*.nupkg --source github --skip-duplicate --api-key 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
 
 
