@@ -94,7 +94,7 @@ jobs:
           file: coverage.cobertura.xml
 
       - uses: actions/upload-artifact@v2
-        if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (inputs.deploy-nuget == true && github.repository_owner == 'PyrotechBlazor' && github.ref == inputs.deploy-condition) }}
+        if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (inputs.deploy-nuget == true && github.repository_owner == 'PyrotechSoftware' && github.ref == inputs.deploy-condition) }}
         with:
           name: 'Packages'
           path: ${{env.DOTNET_ROOT}}/ + '*.nupkg'
@@ -102,7 +102,7 @@ jobs:
   cd:
     name: Deploy
     needs: ci
-    if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (inputs.deploy-nuget == true && github.repository_owner == 'PyrotechBlazor' && github.ref == inputs.deploy-condition) }}
+    if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (inputs.deploy-nuget == true && github.repository_owner == 'PyrotechSoftware' && github.ref == inputs.deploy-condition) }}
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Packages
