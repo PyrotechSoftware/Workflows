@@ -1,4 +1,4 @@
-name: template-pipeline
+name: template-ci-pipeline
 
 on:
   workflow_call:
@@ -16,22 +16,16 @@ on:
         required: false
         type: boolean
         default: false
-      deploy-web-app:
+      deploy-package:
         required: false
         type: boolean
         default: false
       deploy-condition:
         required: false
         type: string
-      deploy-web-app-name:
-        description: 'name of the azure app only needed if deploy web app is true'
+      package-name:
         required: false
         type: string
-      deploy-web-app-slot-name:
-        description: 'name of the azure app slot name only needed if deploy web app is true'
-        required: false
-        type: string
-        default: 'production'
       check-eslint:
         description: 'path to script folder if you want to check ES6 compliant'
         required: false
@@ -45,8 +39,6 @@ on:
         type: string
         default: './'
     secrets:
-      publish-profile:
-        required: false
       code-cov-token:
         required: false
 
@@ -91,33 +83,3 @@ jobs:
         with:
           token: ${{ secrets.code-cov-token }}
           file: coverage.cobertura.xml
-
-      - name: Publish
-        if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (inputs.deploy-web-app == true && github.repository_owner == 'PyrotechBlazor' && github.ref == inputs.deploy-condition) }}
-        run: dotnet publish ${{ inputs.publish-directory }} -c Release --runtime win-x64 --self-contained -o ${{env.DOTNET_ROOT}}/${{ inputs.deploy-web-app-name }}
-        
-      - uses: actions/upload-artifact@v2
-        if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (inputs.deploy-web-app == true && github.repository_owner == 'PyrotechBlazor' && github.ref == inputs.deploy-condition) }}
-        with:
-          name: ${{ inputs.deploy-web-app-name }}
-          path: ${{env.DOTNET_ROOT}}/${{ inputs.deploy-web-app-name }}
-
-  cd:
-    name: Deploy
-    needs: ci
-    if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (inputs.deploy-web-app == true && github.repository_owner == 'PyrotechBlazor' && github.ref == inputs.deploy-condition) }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v2.0.10
-        with:
-          name: ${{ inputs.deploy-web-app-name }}
-          path: ${{ inputs.deploy-web-app-name }}
-
-      - name: Deploy to Azure
-        uses: azure/webapps-deploy@v2
-        with: 
-            app-name: ${{ inputs.deploy-web-app-name }}
-            slot-name: ${{ inputs.deploy-web-app-slot-name }}
-            publish-profile: ${{ secrets.publish-profile }}
-            package: ${{ inputs.deploy-web-app-name }}
