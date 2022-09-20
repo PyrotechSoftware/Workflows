@@ -41,6 +41,8 @@ on:
     secrets:
       code-cov-token:
         required: false
+      package-token:
+        required: false
 
 jobs:
   ci:
