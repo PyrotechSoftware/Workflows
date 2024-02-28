@@ -54,7 +54,7 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install eslint
         if: ${{ inputs.check-eslint != null }}
@@ -71,7 +71,7 @@ jobs:
           include-prerelease: ${{ inputs.dotnet-prerelease }}
 
       - name: Define Azure DevOps Source
-        run: dotnet nuget add source --username PyrotechSoftware --password ${{ secrets.DEVOPS_TOKEN }} --store-password-in-clear-text --name devops "https://pkgs.dev.azure.com/plannerdev/_packaging/PlannerDevFeed/nuget/v3/index.json"
+        run: dotnet nuget add source --username PyrotechSoftware --password ${{ secrets.devops-token }} --store-password-in-clear-text --name devops "https://pkgs.dev.azure.com/plannerdev/_packaging/PlannerDevFeed/nuget/v3/index.json"
 
       - name: Restore
         run: dotnet restore
