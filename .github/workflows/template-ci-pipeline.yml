@@ -43,6 +43,8 @@ on:
         required: false
       package-token:
         required: false
+      devops-token:
+        required: false
 
 jobs:
   ci:
